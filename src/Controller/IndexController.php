@@ -26,4 +26,25 @@ class IndexController extends AbstractController
             throw new IndexException($e->getCode(),$e->getMessage(), $e->getCode());
         }
     }
+
+    /**
+     * @Route("/time", name="show_time")
+     */
+    public function showTime(): Response
+    {
+        try
+        {
+            $output_data = $data->today();
+            return $this->render('base.html.twig', [
+                'title_data' => 'Time',
+                'output_data' => $output_data,
+                ]);                
+        }
+        catch (\Exception $e) 
+        {            
+            throw new IndexException($e->getCode(),$e->getMessage(), $e->getCode());
+        }
+    }
+
+
 }
