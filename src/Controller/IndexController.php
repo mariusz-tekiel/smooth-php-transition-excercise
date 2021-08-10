@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Exception\IndexException;
 
 class IndexController extends AbstractController
 {
@@ -13,9 +14,16 @@ class IndexController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/IndexController.php',
-        ]);
+        try
+        {
+            return $this->render('base.html.twig', [
+                'title_data' => 'Welcome!',
+                'output_data' => 'Please use "/time" or "/price" as URL.',
+                ]);                
+        }
+        catch (\Exception $e) 
+        {            
+            throw new IndexException($e->getCode(),$e->getMessage(), $e->getCode());
+        }
     }
 }
